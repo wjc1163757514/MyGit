@@ -1,0 +1,54 @@
+﻿
+* {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    text-decoration: none;
+    border: 0px;
+    font-size: 15px;
+    font-family: 'Microsoft YaHei';
+}
+
+#content {
+    padding-top: 50px;
+    width: 1200px;
+    height: 800px;
+    margin: 0px auto;
+}
+
+    #content table {
+        margin: 0px auto;
+        margin-top: 50px;
+        border: 1px solid black;
+    }
+
+        #content table tr td, #content table tr th {
+            padding: 20px;
+            border: 1px solid #00b9ff;
+            font-family: 'Microsoft YaHei';
+            font-size: 15px;
+            width: 200px;
+            text-align: center;
+        }
+
+    #content h1 {
+        text-align: center;
+        margin: 0px auto;
+    }
+
+
+
+.btn {
+    width: 120px;
+    height: 60px;
+    color: white;
+    background-color: #00b1ff;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+#div_btn {
+    width: 400px;
+    height: 100px;
+    margin: 0px auto;
+}
