@@ -19,7 +19,7 @@
     #content table {
         margin: 0px auto;
         margin-top: 50px;
-        border: 1px solid black;
+        border-collapse: collapse;
     }
 
         #content table tr td, #content table tr th {
@@ -35,8 +35,6 @@
         text-align: center;
         margin: 0px auto;
     }
-
-
 
 .btn {
     width: 120px;

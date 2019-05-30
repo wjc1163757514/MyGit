@@ -13,7 +13,7 @@
 <body>
     <form id="form1" runat="server">
         <div id="content">
-            <h1 style="font-size:30px">WEB发布+DB的小测试啦,远程发布OKKKs</h1>
+            <h1 style="font-size:30px">WEB发布+DB的小测试啦,GIT</h1>
             <div id="div_btn">
             <asp:Button CssClass="btn" ID="Btn_Close" runat="server" Text="退出" OnClick="Btn_Close_Click" />
             <asp:Button CssClass="btn" ID="Btn_Load" runat="server" Text="展示所有数据" OnClick="Btn_Load_Click" />
