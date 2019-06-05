@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebDemo.Class;
 
 namespace WebDemo
 {
@@ -16,7 +17,7 @@ namespace WebDemo
         {
             if (!IsPostBack)
             {
-                DBHelper.Load = 0;
+                ShareClass.Load = 0;
             }
         }
 
@@ -28,13 +29,13 @@ namespace WebDemo
             string str = HttpPost(parameter);
             if (str == "true")
             {
-                DBHelper.Load = 1;
-                DBHelper.UserName = User;
+                ShareClass.Load = 1;
+                ShareClass.UserName = User;
                 Response.Redirect("Index.aspx");
             }
             else
             {
-                DBHelper.Load = 0;
+                ShareClass.Load = 0;
                 Response.Write("<script>alert('登录失败');</script>");
             }
         }

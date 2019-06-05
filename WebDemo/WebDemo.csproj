@@ -88,7 +88,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Class\ApiClass.cs" />
-    <Compile Include="Class\DBHelper.cs" />
+    <Compile Include="Class\ShareClass.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -55,4 +55,3 @@ E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.dll
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.pdb
 E:\Test\WebDemo\WebDemo\WebDemo\bin\Newtonsoft.Json.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\Newtonsoft.Json.xml
-E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csprojAssemblyReference.cache

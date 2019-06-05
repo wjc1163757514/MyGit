@@ -20,13 +20,13 @@ namespace WebDemo
         {
             if (!IsPostBack)
             {
-                if (DBHelper.Load == 0)
+                if (ShareClass.Load == 0)
                 {
                     Response.Redirect("Login.aspx");
                 }
                 else
                 {
-                    string str = "http://47.107.47.39:886/api/ApiDemo/GetList?Name="+DBHelper.UserName;
+                    string str = "http://47.107.47.39:886/api/ApiDemo/GetList?Name="+ ShareClass.UserName;
                     DataTable dt = JsonConvert.DeserializeObject<DataTable>(HttpPost(str));
                     this.Repeater1.DataSource = dt;
                     this.Repeater1.DataBind();
@@ -42,7 +42,7 @@ namespace WebDemo
         //退出登录
         protected void Btn_Close_Click(object sender, EventArgs e)
         {
-            DBHelper.Load = 0;
+            ShareClass.Load = 0;
             Response.Redirect("Login.aspx");
         }
 
