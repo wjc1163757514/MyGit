@@ -71,10 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="API\ApiTest.asmx" />
+    <Content Include="CSS\ICP.css" />
     <Content Include="CSS\Index.css" />
     <Content Include="CSS\Login.css" />
+    <Content Include="HTML\ICP.html" />
     <Content Include="Index.aspx" />
-    <Content Include="index.html" />
+    <Content Include="HTML\index.html" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

@@ -10,7 +10,6 @@
     <title>先登录哟</title>
 </head>
 <body>
-
     <form id="form1" runat="server">
         <div id="content">
         <h1 style="font-size:30px">WelCome To My TestDemo</h1>
@@ -21,5 +20,6 @@
             <asp:Button ID="Btn" runat="server" Text="登录" OnClick="Btn_Click"/>
         </div>
     </form>
+       <iframe src="html/ICP.html" frameBorder="0" scrolling="no" width="100%" height="150" style="margin-top:100px"></iframe>
 </body>
 </html>

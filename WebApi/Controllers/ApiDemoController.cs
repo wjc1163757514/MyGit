@@ -37,11 +37,23 @@ namespace WebApi.Controllers
             return DBHelper.GetDataTableBySql(Str).Rows.Count > 0 ? true : false;
         }
 
+        /// <summary>
+        /// Body传参+JSON反序列化试一手
+        /// </summary>
+        /// <param name="User"></param>
+        /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public string ApiTests()
+        public string ApiTests([FromBody]object User)
         {
-            return "测试ok";
+            ApiTest test = JsonConvert.DeserializeObject<ApiTest>(User.ToString());
+            string str = "姓名是"+test.UserName+" 密码为:"+test.PassWord;
+            return str;
         }
+    }
+
+    public class ApiTest {
+        public string UserName { get; set; }
+        public string PassWord { get; set; }
     }
 }
