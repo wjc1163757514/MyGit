@@ -13,9 +13,9 @@
     <form id="form1" runat="server">
         <div id="content">
         <h1 style="font-size:30px">WelCome To My TestDemo</h1>
-            账号：<asp:TextBox CssClass="Txt" ID="Txt_User" runat="server"></asp:TextBox>
+            账号：<asp:TextBox CssClass="Txt" ID="Txt_User" runat="server" MaxLength="18"></asp:TextBox>
             <br /><br />
-            密码：<asp:TextBox CssClass="Txt" ID="Txt_Pwd" runat="server" TextMode="Password"></asp:TextBox>
+            密码：<asp:TextBox CssClass="Txt" ID="Txt_Pwd" runat="server" TextMode="Password" MaxLength="18"></asp:TextBox>
             <br /><br />
             <asp:Button ID="Btn" runat="server" Text="登录" OnClick="Btn_Click"/>
         </div>
