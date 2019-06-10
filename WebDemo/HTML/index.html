@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <title></title>
 </head>
-<body onload="window.location='index.aspx'">
-    <iframe src="html/ICP.html" frameBorder="0" scrolling="no" width="100%" height="150" style="margin-top:100px"></iframe>
-</body>
+<body onload="window.location='../index.aspx'">  
+        <iframe src="ICP.html" frameBorder="0" scrolling="no" width="100%" height="150" style="margin-top:100px"></iframe>
+    <input type="button" value="点击打开页面" onclick="LoadICP()"/>
+        <script type="text/javascript">
+            function LoadICP() {
+                window.open("ICP.html","_Blank");
+            }
+        </script>
+    </body>
 </html>
