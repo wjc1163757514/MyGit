@@ -93,5 +93,4 @@ E:\Test\WebDemo\WebDemo\WebApi\obj\Debug\WebApi.csproj.CoreCompileInputs.cache
 E:\Test\WebDemo\WebDemo\WebApi\obj\Debug\WebApi.csproj.CopyComplete
 E:\Test\WebDemo\WebDemo\WebApi\obj\Debug\WebApi.dll
 E:\Test\WebDemo\WebDemo\WebApi\obj\Debug\WebApi.pdb
-E:\Test\WebDemo\WebDemo\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
 E:\Test\WebDemo\WebDemo\WebApi\bin\Extensions.dll

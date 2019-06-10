@@ -47,7 +47,19 @@ namespace WebApi.Controllers
         public string ApiTests([FromBody]object User)
         {
             ApiTest test = JsonConvert.DeserializeObject<ApiTest>(User.ToString());
-            string str = "姓名是"+test.UserName+" 密码为:"+test.PassWord;
+            string str = "";
+            if (test.UserName==null||test.PassWord==null)
+            {
+                str = "传参格式不正确！";
+            }
+            else if (test.UserName.Trim() == "" || test.PassWord.Trim() == "")
+            {
+                str = "参数值为空！";
+            }
+            else 
+            {
+                str = "姓名是" + test.UserName + " 密码为:" + test.PassWord;
+            }
             return str;
         }
     }
