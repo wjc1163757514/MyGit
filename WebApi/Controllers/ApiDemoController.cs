@@ -6,29 +6,44 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Data;
 using Newtonsoft.Json;
-
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     public class ApiDemoController : ApiController
     {
-        // GET: api/ApiDemo
+        /// <summary>
+        /// 获取单个用户信息
+        /// </summary>
+        /// <param name="Name">用户名，没有则获取所有</param>
+        /// <returns>返回用户Table</returns>
         [HttpGet]
         [HttpPost]
         public DataTable GetList(string Name)
         {
-            string str = "SELECT * FROM DB_TEST.DBO.STUDENT";
-            if (Name != null)
-            {
-                if (Name.Trim() != "")
-                {
-                    str = "SELECT * FROM DB_TEST.DBO.STUDENT WHERE STUDENTNAME='" + Name + "'";
-                }
-            }
+            string str = "SELECT * FROM DB_TEST.DBO.STUDENT WHERE STUDENTNAME='" + Name + "'";
             DataTable dt = DBHelper.GetDataTableBySql(str);
             return dt;
         }
 
+        /// <summary>
+        /// 获取所有用户信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public DataTable GetList()
+        {
+            DataTable dt = DBHelper.GetDataTableBySql("SELECT * FROM DB_TEST.DBO.STUDENT");
+            return dt;
+        }
+
+        /// <summary>
+        /// 登录接口
+        /// </summary>
+        /// <param name="UserName">用户名</param>
+        /// <param name="PassWord">密码</param>
+        /// <returns>bool值表示登录是否成功</returns>
         [HttpGet]
         [HttpPost]
         public bool UserLogin(string UserName, string PassWord)
@@ -40,15 +55,15 @@ namespace WebApi.Controllers
         /// <summary>
         /// Body传参+JSON反序列化试一手
         /// </summary>
-        /// <param name="User"></param>
-        /// <returns></returns>
+        /// <param name="User">body参数名</param>
+        /// <returns>返回反序列化后的字符串</returns>
         [HttpGet]
         [HttpPost]
         public string ApiTests([FromBody]object User)
         {
             ApiTest test = JsonConvert.DeserializeObject<ApiTest>(User.ToString());
             string str = "";
-            if (test.UserName==null||test.PassWord==null)
+            if (test.UserName == null || test.PassWord == null)
             {
                 str = "传参格式不正确！";
             }
@@ -56,16 +71,11 @@ namespace WebApi.Controllers
             {
                 str = "参数值为空！";
             }
-            else 
+            else
             {
                 str = "姓名是" + test.UserName + " 密码为:" + test.PassWord;
             }
             return str;
         }
-    }
-
-    public class ApiTest {
-        public string UserName { get; set; }
-        public string PassWord { get; set; }
     }
 }
