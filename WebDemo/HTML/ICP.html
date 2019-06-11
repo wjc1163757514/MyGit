@@ -12,13 +12,13 @@
         <p>WJC版权所有<a href="http://www.beian.miit.gov.cn/" target="_blank">湘ICP备19011121号</a></p>
     </div>
 
-    <input type="button" value="打印" onclick="Print()" />
+    <!--<input type="button" value="打印" onclick="Print()" />-->
     <script type="text/javascript">
         //加载事件
         window.onload = function () {
             //获取Session值
             var Session_GetICP = sessionStorage.getItem('GetICP');
-            alert("页面加载");
+            //alert("页面加载");
             //判断是否为打印按钮打开的页面
             if (Session_GetICP == "true") {
                 alert("开始打印");
