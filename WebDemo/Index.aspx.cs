@@ -26,14 +26,13 @@ namespace WebDemo
                 }
                 else
                 {
-                    string str = "http://47.107.47.39:886/api/ApiDemo/GetList?Name="+ ShareClass.UserName;
-                    DataTable dt = JsonConvert.DeserializeObject<DataTable>(HttpPost(str));
+                    //拼接接口URL
+                    string str = ShareClass.ApiUrl+"GetList?Name=" + ShareClass.UserName;
+                    //调用接口，将返回值反序列化为DataTable对象
+                    DataTable dt = JsonConvert.DeserializeObject<DataTable>(ShareClass.HttpPost(str));
+                    //绑定数据源
                     this.Repeater1.DataSource = dt;
                     this.Repeater1.DataBind();
-                    //ApiTest api = new ApiTest();
-                    //var json=api.GetString("admin");
-                    //DataTable dt = JsonConvert.DeserializeObject<DataTable>(json);
-                    //this.Label1.Text = dt.Rows[0]["msg"].ToString();
                 }
             }
                 
@@ -46,32 +45,11 @@ namespace WebDemo
             Response.Redirect("Login.aspx");
         }
 
-        //HTTP-Post方法
-        public static string HttpPost(string url)
+        //加载所有数据
+        protected void Btn_Load_Click(object sender, EventArgs e)
         {
-            //ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-            Encoding encoding = Encoding.UTF8;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "POST";
-            request.Accept = "text/html, application/xhtml+xml, */*";
-            request.ContentType = "application/json";
-            request.ContentLength = 0;
-
-            //byte[] buffer = encoding.GetBytes(body);
-            //request.ContentLength = buffer.Length;
-            //request.GetRequestStream().Write(buffer, 0, buffer.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-            //加载所有数据
-            protected void Btn_Load_Click(object sender, EventArgs e)
-        {
-            string str = string.Format("http://47.107.47.39:886/api/ApiDemo/GetList?Name=");
-            this.Repeater1.DataSource = JsonConvert.DeserializeObject<DataTable>(HttpPost(str));
+            string str = string.Format(ShareClass.ApiUrl+"GetList");
+            this.Repeater1.DataSource = JsonConvert.DeserializeObject<DataTable>(ShareClass.HttpPost(str));
             this.Repeater1.DataBind();
         }
     }

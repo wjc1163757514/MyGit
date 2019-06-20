@@ -61,6 +61,10 @@ namespace WebApi.Controllers
         [HttpPost]
         public string ApiTests([FromBody]object User)
         {
+            if (User==null)
+            {
+                return "未传参";
+            }
             ApiTest test = JsonConvert.DeserializeObject<ApiTest>(User.ToString());
             string str = "";
             if (test.UserName == null || test.PassWord == null)
@@ -73,9 +77,21 @@ namespace WebApi.Controllers
             }
             else
             {
-                str = "姓名是" + test.UserName + " 密码为:" + test.PassWord;
+                str = "body传参调用接口ok,姓名是" + test.UserName + " 密码为:" + test.PassWord;
             }
             return str;
+        }
+
+        /// <summary>
+        /// Body传参+JSON反序列化试一手
+        /// </summary>
+        /// <param name="User">body参数名</param>
+        /// <returns>返回反序列化后的字符串</returns>
+        [HttpGet]
+        [HttpPost]
+        public string ApiTests(string Pwd)
+        {
+            return "params传参数调用接口OK,参数：" + Pwd;
         }
     }
 }
