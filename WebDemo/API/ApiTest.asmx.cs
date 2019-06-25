@@ -21,19 +21,19 @@ namespace WebDemo.API
     {
 
         [WebMethod]
-        public  string GetString(string str)
+        public  string GetString(string UserName,string PassWord)
         {
-            ApiClass apiClass = new ApiClass() {Id=1,Msg="先给个默认值" };
-
-            if (str=="admin")
+            ApiClass apiClass = new ApiClass() {UserName= UserName, PassWord= PassWord };
+            string str = "";
+            if (UserName==""|| PassWord=="")
             {
-                apiClass.Msg = "调用接口OK";
+                str = "参数都TM搞错了";
             }
             else
             {
-                apiClass.Msg = "参数都TM搞错了";
+                str= JsonConvert.SerializeObject(apiClass);
             }
-            return JsonConvert.SerializeObject(apiClass);
+            return str;
         }
     }
 }

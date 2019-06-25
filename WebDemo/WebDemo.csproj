@@ -75,8 +75,10 @@
     <Content Include="CSS\Index.css" />
     <Content Include="CSS\Login.css" />
     <Content Include="HTML\ICP.html" />
+    <Content Include="HTML\Test.html" />
     <Content Include="Index.aspx" />
     <Content Include="HTML\index.html" />
+    <Content Include="Js\jquery-latest.js" />
     <Content Include="Login.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -115,9 +117,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Js\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

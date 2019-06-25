@@ -7,11 +7,14 @@ using System.Web.Http;
 using System.Data;
 using Newtonsoft.Json;
 using WebApi.Models;
+using Newtonsoft.Json.Converters;
+using System.Web.Http.Controllers;
 
 namespace WebApi.Controllers
 {
     public class ApiDemoController : ApiController
     {
+
         /// <summary>
         /// 获取单个用户信息
         /// </summary>
@@ -59,9 +62,9 @@ namespace WebApi.Controllers
         /// <returns>返回反序列化后的字符串</returns>
         [HttpGet]
         [HttpPost]
-        public string ApiTests([FromBody]object User)
+        public string ApiTest([FromBody]dynamic User)
         {
-            if (User==null)
+            if (User==null||User.ToString()== "System.Object")
             {
                 return "未传参";
             }
@@ -77,7 +80,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                str = "body传参调用接口ok,姓名是" + test.UserName + " 密码为:" + test.PassWord;
+                str = JsonConvert.SerializeObject(test);
             }
             return str;
         }
@@ -89,9 +92,28 @@ namespace WebApi.Controllers
         /// <returns>返回反序列化后的字符串</returns>
         [HttpGet]
         [HttpPost]
-        public string ApiTests(string Pwd)
+        public string ApiTest(string UserName)
         {
-            return "params传参数调用接口OK,参数：" + Pwd;
+
+            ApiTest test = new ApiTest() {UserName=UserName,PassWord="123456" };
+            string str = JsonConvert.SerializeObject(test);
+            return str;
+        }
+
+        /// <summary>
+        /// 可解决Ajax发起的默认Options方法，和路由配合
+        /// </summary>
+        /// <returns></returns>
+        [HttpOptions]
+        public string Options()
+        {
+            return "200"; // HTTP 200 response with empty body
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public string GetString(string UserName) {
+            return "调用接口OK" + UserName;
         }
     }
 }
