@@ -36,7 +36,7 @@
             var ParameterData = "Name=wjc";  //非body传参
             $.ajax({
                 type: "POST",
-                url: "http://localhost:50668/api/ApiDemo/GetList?",
+                url: "http://localhost:50668/api/ApiDemo/GetList?" + ParameterData,
                 contentType: "application/json",     //参数类型,一般配合body传参使用
                 //data: JSON.stringify(BodyData),                //json格式传参数，data的值必须是''包着,一般为body传参时使用
                 dataType: "json",                    //返回值类型
@@ -44,8 +44,9 @@
                 success: function (data) {
                     var str = JSON.stringify(data);
                     alert(str);
-                    alert(data[0].CreateTime);
-                    //var json = eval('(' + data[0] + ')');  //字符串序列化为json对象 .d是webserver特性,通常用于有\"这种转义符号的字符串返回
+                    alert(data.Result[0].CreateTime);
+                   // var json = eval('(' + data + ')');  //字符串序列化为json对象 .d是webserver特性,通常用于有\"这种转义符号的字符串返回
+                    
                     
                 },
                 error: function (XMLHttpReuqest, textStautus, errothrown) {    //异常处理

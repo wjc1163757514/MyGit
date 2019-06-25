@@ -22,11 +22,22 @@ namespace WebApi.Controllers
         /// <returns>返回用户Table</returns>
         [HttpGet]
         [HttpPost]
-        public DataTable GetList(string Name)
+        public ApiResult GetList(string Name)
         {
+            //获取数据
             string str = "SELECT * FROM DB_TEST.DBO.STUDENT WHERE STUDENTNAME='" + Name + "'";
             DataTable dt = DBHelper.GetDataTableBySql(str);
-            return dt;
+            //实例化接口返回对象
+            ApiResult Result = new ApiResult() {
+                ResultNo = 0,
+                Message = "调用OK",
+                Elapsed = 10,
+                Timestamp = DateTime.Now.Date,
+                Total=dt.Rows.Count,
+                Result=dt
+            };
+            //返回序列化的字符串
+            return Result;
         }
 
         /// <summary>
@@ -35,10 +46,22 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public DataTable GetList()
+        public ApiResult GetList()
         {
+            //获取数据
             DataTable dt = DBHelper.GetDataTableBySql("SELECT * FROM DB_TEST.DBO.STUDENT");
-            return dt;
+            //实例化接口返回对象
+            ApiResult Result = new ApiResult()
+            {
+                ResultNo = 0,
+                Message = "调用OK",
+                Elapsed = 10,
+                Timestamp = DateTime.Now.Date,
+                Total = dt.Rows.Count,
+                Result = dt
+            };
+            //返回序列化的字符串
+            return Result;
         }
 
         /// <summary>
