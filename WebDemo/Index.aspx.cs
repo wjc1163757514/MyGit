@@ -27,11 +27,9 @@ namespace WebDemo
                 else
                 {
                     //拼接接口URL
-                    string str = ShareClass.ApiUrl+"GetList?Name=" + ShareClass.UserName;
-                    //调用接口，将返回值反序列化为DataTable对象
-                    DataTable dt = JsonConvert.DeserializeObject<DataTable>(ShareClass.HttpPost(str));
-                    //绑定数据源
-                    this.Repeater1.DataSource = dt;
+                    string url = ShareClass.ApiUrl+"GetList?Name=" + ShareClass.UserName;
+                    //绑定数据源DataTable
+                    this.Repeater1.DataSource = GetResult(url);
                     this.Repeater1.DataBind();
                 }
             }
@@ -48,9 +46,17 @@ namespace WebDemo
         //加载所有数据
         protected void Btn_Load_Click(object sender, EventArgs e)
         {
-            string str = string.Format(ShareClass.ApiUrl+"GetList");
-            this.Repeater1.DataSource = JsonConvert.DeserializeObject<DataTable>(ShareClass.HttpPost(str));
+            //拼接接口URL
+            string url = string.Format(ShareClass.ApiUrl+"GetList");
+            //绑定数据源DataTable
+            this.Repeater1.DataSource = GetResult(url);
             this.Repeater1.DataBind();
+        }
+
+        private DataTable GetResult(string url) {
+            //调用接口，返回值序列化为ApiResult对象
+            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpPost(url));
+            return result.Result;
         }
     }
 }

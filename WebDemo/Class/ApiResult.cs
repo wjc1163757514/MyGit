@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 
-namespace WebApi.Models
+namespace WebDemo.Class
 {
     public class ApiResult
     {

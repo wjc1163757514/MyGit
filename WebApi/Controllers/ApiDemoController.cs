@@ -22,7 +22,7 @@ namespace WebApi.Controllers
         /// <returns>返回用户Table</returns>
         [HttpGet]
         [HttpPost]
-        public ApiResult GetList(string Name)
+        public IHttpActionResult GetList(string Name)
         {
             //获取数据
             string str = "SELECT * FROM DB_TEST.DBO.STUDENT WHERE STUDENTNAME='" + Name + "'";
@@ -37,7 +37,7 @@ namespace WebApi.Controllers
                 Result=dt
             };
             //返回序列化的字符串
-            return Result;
+            return Json(Result);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public ApiResult GetList()
+        public IHttpActionResult GetList()
         {
             //获取数据
             DataTable dt = DBHelper.GetDataTableBySql("SELECT * FROM DB_TEST.DBO.STUDENT");
@@ -61,7 +61,7 @@ namespace WebApi.Controllers
                 Result = dt
             };
             //返回序列化的字符串
-            return Result;
+            return Json(Result);
         }
 
         /// <summary>
