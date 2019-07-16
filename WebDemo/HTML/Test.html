@@ -10,13 +10,25 @@
     <h1 id="test">做个测试功能</h1>
     <script type="text/javascript">
         $(function () {
-            AjaxAPI();
+            Test();
         });
 
         //一些常用到的测试用地址
         //官网测试API：http://10.4.18.194:8001/json/reply/SearchNewPropAdRequest?length=6&cityen=tj
         //本地调试WebApi：http://localhost:50668/api/ApiDemo/GetString
         //服务器部署WebApi（同本地）：http://wangjc.top:886/api/ApiDemo/ApiTests?
+
+        function CentaUserTest() {
+            $.ajax({
+                url: "https://mobileapi.centanet.com/passport/v6/json/reply/UserInfoRequest",
+                dataType: "text",
+                data: { "UserToken": "hzLsVVI9iYdiE8sqwS45iABs3cFabm59747vR6mBD8kovAz0sNzuz40ulzpvQvnRa-aRaiX1Cs1XUAT4q-x-VdtpXI6CKFh4TUWtUq-/WyIIfBoAuhEkZahuL-NaLfF8N/nl/A8mBvC6LTgT7CvOmJT-ch6hEbMlahYew4oRA04_" },
+                success: function (data) {
+                    var json = eval('(' + data + ')');
+                    alert(json.Result.Phone);
+                }
+            });
+        }
 
         function NewPropApi() {
             $.ajax({

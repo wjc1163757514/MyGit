@@ -28,11 +28,10 @@ namespace WebApi
                 defaults: new { id = RouteParameter.Optional },
                 constraints: new { action = new OptionsConstraint()}  //添加路由的第四个属性，防止Options重复调用
                 );
-
         }
 
         /// <summary>
-        /// 防止跨域时Options自检引起的重复提交重复提交
+        /// 防止跨域时Options自检引起的重复提交
         /// </summary>
         public class OptionsConstraint : IHttpRouteConstraint
         {
@@ -49,6 +48,6 @@ namespace WebApi
                 return true;
             }
         }
-
+        
     }
 }

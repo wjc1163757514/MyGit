@@ -7,8 +7,6 @@ using System.Web.Http;
 using System.Data;
 using Newtonsoft.Json;
 using WebApi.Models;
-using Newtonsoft.Json.Converters;
-using System.Web.Http.Controllers;
 
 namespace WebApi.Controllers
 {
@@ -72,9 +70,10 @@ namespace WebApi.Controllers
         /// <returns>bool值表示登录是否成功</returns>
         [HttpGet]
         [HttpPost]
-        public bool UserLogin(string UserName, string PassWord)
+        public bool UserLogin([FromBody]dynamic body)
         {
-            string Str = string.Format("SELECT * FROM DB_TEST.DBO.STUDENT WHERE StudentName='{0}' AND Pwd='{1}'", UserName, PassWord);
+            ApiTest apiTest = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
+            string Str = string.Format("SELECT * FROM DB_TEST.DBO.STUDENT WHERE StudentName='{0}' AND Pwd='{1}'", apiTest.UserName, apiTest.PassWord);
             return DBHelper.GetDataTableBySql(Str).Rows.Count > 0 ? true : false;
         }
 
@@ -109,18 +108,22 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Body传参+JSON反序列化试一手
+        /// 两种方式传参共用试一手
         /// </summary>
-        /// <param name="User">body参数名</param>
-        /// <returns>返回反序列化后的字符串</returns>
+        /// <param name="Tokey">url参数</param>
+        /// <param name="body">body参数</param>
+        /// <returns>Json格式的对象</returns>
         [HttpGet]
         [HttpPost]
-        public string ApiTest(string UserName)
+        public IHttpActionResult ApiTest(string Tokey,[FromBody]dynamic body)
         {
-
-            ApiTest test = new ApiTest() {UserName=UserName,PassWord="123456" };
-            string str = JsonConvert.SerializeObject(test);
-            return str;
+            ApiTest test = new ApiTest() { UserName = "默认", PassWord = "123" };
+            if (body!=null)
+            {
+            test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
+            }
+            test.PassWord = test.PassWord + Tokey;
+            return Json(test);
         }
 
         /// <summary>
@@ -128,15 +131,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpOptions]
-        public string Options()
-        {
-            return "200"; // HTTP 200 response with empty body
-        }
+        public string Options() => "200"; // HTTP 200 response with empty body
 
         [HttpGet]
         [HttpPost]
-        public string GetString(string UserName) {
-            return "调用接口OK" + UserName;
-        }
+        public string GetString(string UserName) => "调用接口OK" + UserName;
     }
 }
