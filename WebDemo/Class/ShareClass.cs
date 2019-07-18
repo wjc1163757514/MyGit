@@ -19,8 +19,8 @@ namespace WebDemo.Class
     {
         //多个页面共享变量
         public static int Load = 0;
-        public static string UserName="";
-        public static string ApiUrl= "http://www.wangjc.top:886/api/ApiDemo/";
+        public static string UserName = "";
+        public static string ApiUrl = "http://www.wangjc.top:886/api/ApiDemo/";
         public static string ApiTest = "http://localhost:50668/api/ApiDemo/";
 
         //HTTP-Post方法
@@ -39,7 +39,7 @@ namespace WebDemo.Class
             }
         }
 
-        //HTTP-Post方法，Body传参实现登录
+        //HTTP-Post方法，Body传参实现登录   并不能body传json参数，玩不来
         public static string HttpPost(string Url, object ticket)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(ticket.GetType());
@@ -64,12 +64,13 @@ namespace WebDemo.Class
             return responseText;
         }
 
+        //直接用HttpClientBody传json参数
         public static string HttpContentPost(string Url, ApiClass body)
-        { 
-        //body传参
-        var data = JsonConvert.SerializeObject(body);
+        {
+            //body传参
+            var data = JsonConvert.SerializeObject(body);
             HttpContent httpContent = new StringContent(data);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             using (HttpClient httpClient = new HttpClient())
             {
                 string responseJson = httpClient.PostAsync(Url, httpContent)

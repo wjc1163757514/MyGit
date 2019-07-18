@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../Js/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <h1 id="test">做个测试功能</h1>
+    <script type="text/javascript">
+        $(function () {
+            Test();
+        });
+
+        //一些常用到的测试用地址
+        //官网测试API：http://10.4.18.194:8001/json/reply/SearchNewPropAdRequest?length=6&cityen=tj
+        //本地调试WebApi：http://localhost:50668/api/ApiDemo/GetString
+        //服务器部署WebApi（同本地）：http://wangjc.top:886/api/ApiDemo/ApiTests?
+
+        function CentaUserTest() {
+            $.ajax({
+                url: "https://mobileapi.centanet.com/passport/v6/json/reply/UserInfoRequest",
+                dataType: "text",
+                data: { "UserToken": "hzLsVVI9iYdiE8sqwS45iABs3cFabm59747vR6mBD8kovAz0sNzuz40ulzpvQvnRa-aRaiX1Cs1XUAT4q-x-VdtpXI6CKFh4TUWtUq-/WyIIfBoAuhEkZahuL-NaLfF8N/nl/A8mBvC6LTgT7CvOmJT-ch6hEbMlahYew4oRA04_" },
+                success: function (data) {
+                    var json = eval('(' + data + ')');
+                    alert(json.Result.Phone);
+                }
+            });
+        }
+
+        function NewPropApi() {
+            $.ajax({
+                url:"http://10.4.18.194:8001/json/reply/SearchNewPropAdRequest?length=6&cityen=tj",
+                type: "Get",
+                dataType: "json",
+                success: function (data) {
+                    var json = JSON.stringify(data);
+                    alert(json);
+                    alert(JSON.stringify(data.Result[0]));
+                } 
+            });
+        }
+
+        function AjaxAPI() {
+            var BodyData = { UserName: "wjc", PassWord: "123" };   //body传参 
+            var ParameterData = "Name=wjc";  //非body传参
+            $.ajax({
+                type: "POST",
+                url: "http://wangjc.top:886/api/ApiDemo/GetList?" + ParameterData,
+                contentType: "application/json",     //参数类型,一般配合body传参使用
+                //data: JSON.stringify(BodyData),                //json格式传参数，data的值必须是''包着,一般为body传参时使用
+                dataType: "json",                    //返回值类型
+                //async: false,                          //是否异步
+                success: function (data) {
+                    var str = JSON.stringify(data);
+                    alert(str);
+                    alert(data.Result[0].CreateTime);
+                   // var json = eval('(' + data + ')');  //字符串序列化为json对象 .d是webserver特性,通常用于有\"这种转义符号的字符串返回
+                    
+                    
+                },
+                error: function (XMLHttpReuqest, textStautus, errothrown) {    //异常处理
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpReuqest.readyState);
+                    console.log(XMLHttpRequest.responseText);
+                    console.log(textStautus);
+                    console.log(errothrown);
+                }
+            });
+        }
+
+        function PostAPI() {
+            var jsondata = { UserName: "wjc"};
+            $.post("http://localhost:50668/api/ApiDemo/ApiTests?UserName=wjc",
+                JSON.stringify(jsondata),
+                function (result) {
+                    var json = eval('(' + result + ')');
+                    alert(result);
+                    alert(json);
+                    alert(json.UserName);
+                    alert(json.PassWord);
+                }, "json");
+
+        }
+
+    </script>
+</body>
+</html>

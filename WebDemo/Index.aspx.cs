@@ -27,9 +27,12 @@ namespace WebDemo
                 else
                 {
                     //拼接接口URL
+
                     string url = ShareClass.ApiUrl+"GetList?Name=" + ShareClass.UserName;
+                    DataTable dt = new DataTable();
+                    dt = GetResult(url);
                     //绑定数据源DataTable
-                    this.Repeater1.DataSource = GetResult(url);
+                    this.Repeater1.DataSource = dt;
                     this.Repeater1.DataBind();
                 }
             }
@@ -49,7 +52,17 @@ namespace WebDemo
             //拼接接口URL
             string url = string.Format(ShareClass.ApiUrl+"GetList");
             //绑定数据源DataTable
-            this.Repeater1.DataSource = GetResult(url);
+            DataTable dt;
+            if (Cache["DataTable"] ==null)
+            {
+                dt = GetResult(url);
+                Cache.Insert("DataTable", dt, null, DateTime.Now.AddSeconds(60), TimeSpan.Zero);
+            }
+            else
+            {
+                dt =(DataTable)Cache["DataTable"];
+            }
+            this.Repeater1.DataSource = dt;
             this.Repeater1.DataBind();
         }
 
@@ -57,6 +70,12 @@ namespace WebDemo
             //调用接口，返回值序列化为ApiResult对象
             ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpPost(url));
             return result.Result;
+        }
+
+        protected void Btn_ClearCache_Click(object sender, EventArgs e)
+        {
+            //清除Cache缓存
+            Cache.Remove("DataTable");
         }
     }
 }

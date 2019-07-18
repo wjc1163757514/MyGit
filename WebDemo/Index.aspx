@@ -17,6 +17,7 @@
             <div id="div_btn">
             <asp:Button CssClass="btn" ID="Btn_Close" runat="server" Text="退出" OnClick="Btn_Close_Click" />
             <asp:Button CssClass="btn" ID="Btn_Load" runat="server" Text="展示所有数据" OnClick="Btn_Load_Click" />
+                <asp:Button CssClass="btn" ID="Btn_ClearCache" runat="server" Text="清除缓存" OnClick="Btn_ClearCache_Click" />
             </div>
             <table>
                 <tr>
