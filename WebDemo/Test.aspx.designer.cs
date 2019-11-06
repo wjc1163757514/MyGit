@@ -10,52 +10,70 @@
 namespace WebDemo {
     
     
-    public partial class Index {
+    public partial class Test {
         
         /// <summary>
-        /// form1 控件。
+        /// form2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
         
         /// <summary>
-        /// Btn_Close 控件。
+        /// Txt_TargetEmail 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Close;
+        protected global::System.Web.UI.WebControls.Button Txt_TargetEmail;
         
         /// <summary>
-        /// Btn_Load 控件。
+        /// Button1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Load;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// Btn_ClearCache 控件。
+        /// Btn_LoadRepeater 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_ClearCache;
+        protected global::System.Web.UI.WebControls.Button Btn_LoadRepeater;
         
         /// <summary>
-        /// Btn_File 控件。
+        /// Btn_BackHomePage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_File;
+        protected global::System.Web.UI.WebControls.Button Btn_BackHomePage;
+        
+        /// <summary>
+        /// FileUpload1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        
+        /// <summary>
+        /// Btn_UploadingFile 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_UploadingFile;
         
         /// <summary>
         /// Repeater1 控件。
@@ -65,32 +83,5 @@ namespace WebDemo {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
-        
-        /// <summary>
-        /// Txt_TargetEmail 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Txt_TargetEmail;
-        
-        /// <summary>
-        /// Txt_EmailBody 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Txt_EmailBody;
-        
-        /// <summary>
-        /// Btn_SendEmail 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_SendEmail;
     }
 }

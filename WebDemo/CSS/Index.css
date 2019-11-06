@@ -45,7 +45,40 @@
 }
 
 #div_btn {
-    width: 600px;
+    width: 800px;
     height: 100px;
     margin: 0px auto;
 }
+
+#Email {
+    width: 600px;
+    height: 300px;
+    margin: 0px auto;
+    margin-top: 50px;
+    border: 1px solid blue;
+}
+    #Email input[type=text] {
+        margin: auto;
+        height: 30px;
+        width: 300px;
+        margin-left: 10px;
+        padding-left: 10px;
+        border: 1px solid blue;
+    }
+
+    #Email textarea {
+        border: 1px solid blue;
+        margin: auto;
+        height: 100px;
+        width: 400px;
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+
+    .btn2 {
+        width: 80px;
+        height: 40px;
+        color: white;
+        background-color: #00b1ff;
+        margin-left: 180px;
+    }

@@ -166,12 +166,17 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ApiDemoController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApiEmailRequest.cs" />
     <Compile Include="Models\ApiResult.cs" />
+    <Compile Include="Models\ApiShareClass.cs" />
     <Compile Include="Models\ApiTest.cs" />
     <Compile Include="Models\DBHelper.cs" />
+    <Compile Include="Models\FileRequest.cs" />
+    <Compile Include="Models\FileResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

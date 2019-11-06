@@ -31,7 +31,7 @@ namespace WebDemo
             //string str = ShareClass.HttpPost(parameter);
             if (str == "true")
             {
-                ShareClass.Load = 1;
+                Session["Login"] = "True";
                 ShareClass.UserName = User;
                 Response.Redirect("Index.aspx");
             }

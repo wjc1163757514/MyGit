@@ -81,6 +81,7 @@
     <Content Include="HTML\index.html" />
     <Content Include="Js\jquery-latest.js" />
     <Content Include="Login.aspx" />
+    <Content Include="Test.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -91,7 +92,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Class\ApiClass.cs" />
+    <Compile Include="Class\ApiEmailReuqest.cs" />
     <Compile Include="Class\ApiResult.cs" />
+    <Compile Include="Class\FileRequest.cs" />
+    <Compile Include="Class\FileResult.cs" />
     <Compile Include="Class\ShareClass.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
@@ -108,10 +112,19 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings1.pubxml" />
+    <None Include="Properties\PublishProfiles\Default Settings2.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

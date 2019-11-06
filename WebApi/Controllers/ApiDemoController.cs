@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Data;
 using Newtonsoft.Json;
 using WebApi.Models;
+using System.Web;
 
 namespace WebApi.Controllers
 {
@@ -26,14 +27,20 @@ namespace WebApi.Controllers
             string str = "SELECT * FROM DB_TEST.DBO.STUDENT WHERE STUDENTNAME='" + Name + "'";
             DataTable dt = DBHelper.GetDataTableBySql(str);
             //实例化接口返回对象
-            ApiResult Result = new ApiResult() {
-                ResultNo = 0,
+            ApiResult Result = new ApiResult()
+            {
+                ResultNo = 1,
                 Message = "调用OK",
                 Elapsed = 10,
-                Timestamp = DateTime.Now.Date,
-                Total=dt.Rows.Count,
-                Result=dt
+                Timestamp = DateTime.Now,
+                Total = dt.Rows.Count,
+                Result = dt
             };
+            if (Name == "" || Name == null)
+            {
+                Result.Message = "未传参";
+                Result.ResultNo = 0;
+            }
             //返回序列化的字符串
             return Json(Result);
         }
@@ -54,7 +61,7 @@ namespace WebApi.Controllers
                 ResultNo = 0,
                 Message = "调用OK",
                 Elapsed = 10,
-                Timestamp = DateTime.Now.Date,
+                Timestamp = DateTime.Now,
                 Total = dt.Rows.Count,
                 Result = dt
             };
@@ -86,7 +93,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public string ApiTest([FromBody]dynamic User)
         {
-            if (User==null||User.ToString()== "System.Object")
+            if (User == null || User.ToString() == "System.Object")
             {
                 return "未传参";
             }
@@ -115,19 +122,85 @@ namespace WebApi.Controllers
         /// <returns>Json格式的对象</returns>
         [HttpGet]
         [HttpPost]
-        public IHttpActionResult ApiTest(string Tokey,[FromBody]dynamic body)
+        public IHttpActionResult ApiTest(string Tokey, [FromBody]dynamic body)
         {
             ApiTest test = new ApiTest() { UserName = "默认", PassWord = "123" };
-            if (body!=null)
+            if (body != null)
             {
-            test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
+                test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
             }
             test.PassWord = test.PassWord + Tokey;
             return Json(test);
         }
 
         /// <summary>
-        /// 可解决Ajax发起的默认Options方法，和路由配合
+        /// 文件上传接口
+        /// </summary>
+        /// <param name="File"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public IHttpActionResult PostFile([FromBody]dynamic body)
+        {
+            string jsonstr = JsonConvert.SerializeObject(body);
+            FileRequest res = JsonConvert.DeserializeObject<FileRequest>(jsonstr);
+            string fullpath = "";
+            string message = "";
+            if (res.File == null)
+            {
+                message = "未选择文件";
+            }
+            else
+            {
+                fullpath = ApiShareClass.SaveFile(res.File, res.Path, res.FileName);
+                ApiShareClass.InsertFile(res);
+                message = "上传成功！文件全路径："+ ("http://www.wangjc.top:8003/FileSave/" + res.FileName);
+            }
+
+            FileResult result = new FileResult()
+            {
+                ContentLength = 0,
+                ContentType = "txt",
+                FileName = res.FileName,
+                FilePath = fullpath,
+                message = message
+            };
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 获取文件列表
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IHttpActionResult GetFileList(String UserName) {
+
+            //获取数据
+            string str = "  SELECT * FROM [DB_Test].[dbo].[FileInfo] WHERE StudentID=" +
+                "(SELECT StudentID FROM [DB_Test].[dbo].[Student] WHERE StudentName='"+UserName+"')";
+            DataTable dt = DBHelper.GetDataTableBySql(str);
+            //实例化接口返回对象
+            ApiResult Result = new ApiResult()
+            {
+                ResultNo = 1,
+                Message = "调用OK",
+                Elapsed = 10,
+                Timestamp = DateTime.Now,
+                Total = dt.Rows.Count,
+                Result = dt
+            };
+            if (UserName == "" || UserName == null)
+            {
+                Result.Message = "未传参";
+                Result.ResultNo = 0;
+            }
+            //返回序列化的字符串
+            return Json(Result);
+        }
+
+        /// <summary>
+        /// 可解决Ajax发起的默认Options预请求方法，和路由配合
         /// </summary>
         /// <returns></returns>
         [HttpOptions]
@@ -136,5 +209,19 @@ namespace WebApi.Controllers
         [HttpGet]
         [HttpPost]
         public string GetString(string UserName) => "调用接口OK" + UserName;
+
+        /// <summary>
+        /// 测试用
+        /// </summary>
+        /// <returns>返回用DataTable</returns>
+        [HttpGet]
+        [HttpPost]
+        public DataTable GetListByDataTable()
+        {
+            //获取数据
+            string str = "SELECT * FROM DB_TEST.DBO.STUDENT";
+            DataTable dt = DBHelper.GetDataTableBySql(str);
+            return dt;
+        }
     }
 }
