@@ -36,6 +36,7 @@
                     <th>文件名</th>
                     <th>文件类型</th>
                     <th>大小</th>
+                    <th>上传时间</th>
                     <th>操作</th>
                 </tr>
                 <asp:Repeater ID="Repeater1" runat="server">
@@ -45,6 +46,7 @@
                             <td><%#Eval("FileName") %></td>
                             <td><%#Eval("FileType") %></td>
                             <td><%#Eval("FileSize") %></td>
+                            <td><%#Eval("CreateTime") %></td>
                             <td><a href="<%#Eval("FilePath") %>" target="_blank">查看</a></td>
                         </tr>
                     </ItemTemplate>

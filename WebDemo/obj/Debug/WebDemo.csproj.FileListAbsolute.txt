@@ -1,5 +1,3 @@
-E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\WebDemo.dll.config
 E:\Test\WebDemo\WebDemo\WebDemo\bin\WebDemo.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\WebDemo.pdb
@@ -10,11 +8,13 @@ E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\csi.exe
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\csi.exe.config
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\csi.rsp
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.Managed.Core.targets
 E:\Test\WebDemo\WebDemo\WebDemo\bin\roslyn\Microsoft.VisualBasic.Core.targets
@@ -58,3 +58,4 @@ E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csproj.CoreCompileInputs.cache
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csproj.CopyComplete
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.dll
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.pdb
+E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csprojAssemblyReference.cache

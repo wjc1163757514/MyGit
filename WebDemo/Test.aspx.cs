@@ -17,6 +17,10 @@ namespace WebDemo
         {
             if (!IsPostBack)
             {
+                if (Session["Login"] == null || Session["Login"].ToString() != "True")
+                {
+                    Response.Redirect("Login.aspx");
+                }
                 LoadRepeater();
             }
         }
@@ -95,7 +99,6 @@ namespace WebDemo
                 FileResult result = JsonConvert.DeserializeObject<FileResult>(str);
                 string message = string.Format("<script> alert('{0}');</script>", result.message);
                 Response.Write(message);
-
             }
             catch (Exception)
             {

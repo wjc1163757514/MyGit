@@ -8,6 +8,7 @@ using System.Data;
 using Newtonsoft.Json;
 using WebApi.Models;
 using System.Web;
+using System.IO;
 
 namespace WebApi.Controllers
 {
@@ -152,9 +153,8 @@ namespace WebApi.Controllers
             }
             else
             {
-                fullpath = ApiShareClass.SaveFile(res.File, res.Path, res.FileName);
-                ApiShareClass.InsertFile(res);
-                message = "上传成功！文件全路径："+ ("http://www.wangjc.top:8003/FileSave/" + res.FileName);
+                fullpath = ApiShareClass.SaveFile(res);
+                message = "上传成功！";
             }
 
             FileResult result = new FileResult()
@@ -175,7 +175,6 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         public IHttpActionResult GetFileList(String UserName) {
-
             //获取数据
             string str = "  SELECT * FROM [DB_Test].[dbo].[FileInfo] WHERE StudentID=" +
                 "(SELECT StudentID FROM [DB_Test].[dbo].[Student] WHERE StudentName='"+UserName+"')";
