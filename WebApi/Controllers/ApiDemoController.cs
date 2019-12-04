@@ -143,8 +143,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IHttpActionResult PostFile([FromBody]dynamic body)
         {
-            string jsonstr = JsonConvert.SerializeObject(body);
-            FileRequest res = JsonConvert.DeserializeObject<FileRequest>(jsonstr);
+            FileRequest res = JsonConvert.DeserializeObject<FileRequest>(body);
             string fullpath = "";
             string message = "";
             if (res.File == null)

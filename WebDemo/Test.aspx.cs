@@ -76,11 +76,10 @@ namespace WebDemo
         //上传文件
         protected void Btn_UploadingFile_Click(object sender, EventArgs e)
         {
-            string TestFilePath = @"E:\Test\FileSave";
-            string FilePath = @"C:\本地磁盘D\Demo\8003\FileSave";
             try
             {
                 byte[] buffer = null;
+                string[] FileTypeList = Request.Files[0].FileName.Split('.');
                 if (Request.Files[0].FileName != "")
                 {
                     buffer = new byte[Request.Files[0].InputStream.Length];
@@ -90,10 +89,9 @@ namespace WebDemo
                 {
                     File = buffer,
                     FileName =Request.Files[0].FileName,
-                    Path = FilePath,
                     StudentName = ShareClass.UserName,
                     FileSize= Request.Files[0].ContentLength,
-                    FileType= Request.Files[0].ContentType
+                    FileType= FileTypeList[FileTypeList.Length - 1]
                 };
                 string str = ShareClass.UploadingFile(request);
                 FileResult result = JsonConvert.DeserializeObject<FileResult>(str);
@@ -108,7 +106,7 @@ namespace WebDemo
 
         private void LoadRepeater()
         {
-            string Url = ShareClass.ApiUrl+ "GetFileList?UserName="+ShareClass.UserName;
+            string Url = ShareClass.AutoApiUrl + "GetFileList?UserName="+ShareClass.UserName;
             this.Repeater1.DataSource = ShareClass.GetDataTableByUrl(Url);
             this.Repeater1.DataBind();
         }

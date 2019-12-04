@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
 using System.Text;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using System.Runtime.Serialization.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-//using System.Web.Mail;
 
 namespace WebDemo.Class
 {
@@ -25,6 +20,7 @@ namespace WebDemo.Class
         public static string UserName = "";
         public static string ApiUrl = "http://www.wangjc.top:886/api/ApiDemo/";
         public static string ApiTestUrl = "http://localhost:50668/api/ApiDemo/";
+        public static string AutoApiUrl = ApiUrl;
 
         //HTTP-Get方法
         public static string HttpGet(string url)
@@ -42,12 +38,14 @@ namespace WebDemo.Class
             }
         }
 
-        //HTTP-Post方法，Body传参实现登录   并不能body传json参数，玩不来
-        public static string HttpPost(string url, string postData, string ActionUrl)
+        //HttpWebRequest方法，Body传参
+        public static string HttpPost(string url, object postData)
         {
-            byte[] bs = Encoding.UTF8.GetBytes(postData);
 
-            HttpWebRequest result = (HttpWebRequest)WebRequest.Create(url + ActionUrl);
+            var data = JsonConvert.SerializeObject(postData);
+            byte[] bs = Encoding.UTF8.GetBytes(data);
+
+            HttpWebRequest result = (HttpWebRequest)WebRequest.Create(url);
             result.ContentType = "application/json";
             result.ContentLength = bs.Length;
             result.Method = "POST";
@@ -65,7 +63,7 @@ namespace WebDemo.Class
                 return reader;
             }
         }
-
+        
         //直接用HttpClientBody传json参数
         public static string HttpContentPost(string Url, object body)
         {
@@ -213,7 +211,7 @@ namespace WebDemo.Class
         //上传文件功能
         public static string UploadingFile(FileRequest request) {
             String body = JsonConvert.SerializeObject(request);
-            return ShareClass.HttpPost(ApiUrl, body, "PostFile");
+            return ShareClass.HttpPost(AutoApiUrl+ "PostFile", body);
         }
 
         //Http-Get通用，返回DataTable

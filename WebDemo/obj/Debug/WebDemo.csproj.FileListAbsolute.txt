@@ -58,4 +58,3 @@ E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csproj.CoreCompileInputs.cache
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csproj.CopyComplete
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.dll
 E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.pdb
-E:\Test\WebDemo\WebDemo\WebDemo\obj\Debug\WebDemo.csprojAssemblyReference.cache
