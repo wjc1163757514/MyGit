@@ -21,7 +21,6 @@ namespace WebApi.Controllers
         /// <param name="Name">用户名，没有则获取所有</param>
         /// <returns>返回用户Table</returns>
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult GetList(string Name)
         {
             //获取数据
@@ -51,7 +50,6 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult GetList()
         {
             //获取数据
@@ -76,7 +74,6 @@ namespace WebApi.Controllers
         /// <param name="UserName">用户名</param>
         /// <param name="PassWord">密码</param>
         /// <returns>bool值表示登录是否成功</returns>
-        [HttpGet]
         [HttpPost]
         public bool UserLogin([FromBody]dynamic body)
         {
@@ -90,7 +87,6 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="User">body参数名</param>
         /// <returns>返回反序列化后的字符串</returns>
-        [HttpGet]
         [HttpPost]
         public string ApiTest([FromBody]dynamic User)
         {
@@ -139,7 +135,6 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
-        [HttpGet]
         [HttpPost]
         public IHttpActionResult PostFile([FromBody]dynamic body)
         {
@@ -213,7 +208,6 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns>返回用DataTable</returns>
         [HttpGet]
-        [HttpPost]
         public DataTable GetListByDataTable()
         {
             //获取数据
