@@ -51,5 +51,10 @@ namespace WebApi.Models
                 , request.FileName, request.FileType, request.FileSize, Path, request.StudentName);
             DBHelper.ExecuteNoQuery(sql);
         }
+
+        public static string AfterByIndex(string str, string AfterIndex)
+        {
+            return str.Substring(str.IndexOf(AfterIndex) + 1, str.Length - (str.IndexOf("@") + 1));
+        }
     }
 }

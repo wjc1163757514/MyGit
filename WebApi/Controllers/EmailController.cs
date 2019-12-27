@@ -9,11 +9,18 @@ using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Web;
 using System.Text;
+using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace WebApi.Controllers
 {
     public class EmailController : ApiController
     {
+        private static readonly string SmtpHost = ConfigurationManager.AppSettings["SmtpHost"].ToString();
+        private static readonly string SmtpPort = ConfigurationManager.AppSettings["SmtpPort"].ToString();
+        
+
         [HttpPost]
         [HttpGet]
         public string SendEmailTest(String Test)
@@ -59,7 +66,8 @@ namespace WebApi.Controllers
             try
             {
                 ApiEmailRequest EmailReuqest = JsonConvert.DeserializeObject<ApiEmailRequest>(body.ToString());
-                string host = "smtp.qq.com";//设置邮件的服务器smtp.qq.com
+                
+                string host ="smtp."+ ApiShareClass.AfterByIndex(EmailReuqest.UserEmail,"@"); //设置邮件的服务器
 
                 //初始化SMTP类
                 SmtpClient smtp = new SmtpClient(host)
@@ -67,7 +75,7 @@ namespace WebApi.Controllers
                     EnableSsl = true, //开启安全连接。
                     Credentials = new NetworkCredential(EmailReuqest.UserEmail, EmailReuqest.UserEmailPassWord), //创建用户凭证
                     DeliveryMethod = SmtpDeliveryMethod.Network, //使用网络传送
-                    Port = 587  //端口设置，很关键 亲测阿里服务器25和465都用不了
+                    Port = int.Parse(SmtpPort)  //端口设置，很关键 亲测阿里服务器25和465都用不了
                 };
 
                 //创建邮件
@@ -94,6 +102,11 @@ namespace WebApi.Controllers
 
                 //发送附加件
                 //message.Attachments.Add(new Attachment(fileAddress, MIME));
+
+                //解决验证过程，远程证书无效
+                ServicePointManager.ServerCertificateValidationCallback =
+                delegate (Object obj, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) { return true; };
+
                 smtp.Send(message); //发送邮件
 
             }
