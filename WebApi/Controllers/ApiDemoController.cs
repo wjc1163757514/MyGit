@@ -85,16 +85,16 @@ namespace WebApi.Controllers
         /// <summary>
         /// Body传参+JSON反序列化试一手
         /// </summary>
-        /// <param name="User">body参数名</param>
+        /// <param name="body">body参数名</param>
         /// <returns>返回反序列化后的字符串</returns>
         [HttpPost]
-        public string ApiTest([FromBody]dynamic User)
+        public string ApiTest([FromBody]dynamic body)
         {
-            if (User == null || User.ToString() == "System.Object")
+            if (body == null || body.ToString() == "System.Object")
             {
                 return "未传参";
             }
-            ApiTest test = JsonConvert.DeserializeObject<ApiTest>(User.ToString());
+            ApiTest test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
             string str = "";
             if (test.UserName == null || test.PassWord == null)
             {
