@@ -77,6 +77,10 @@ namespace WebApi.Controllers
         [HttpPost]
         public bool UserLogin([FromBody]dynamic body)
         {
+            if (body == null || body.ToString() == "System.Object")
+            {
+                return false;
+            }
             ApiTest apiTest = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
             string Str = string.Format("SELECT * FROM DB_TEST.DBO.STUDENT WHERE StudentName='{0}' AND Pwd='{1}'", apiTest.UserName, apiTest.PassWord);
             return DBHelper.GetDataTableBySql(Str).Rows.Count > 0 ? true : false;
@@ -168,10 +172,11 @@ namespace WebApi.Controllers
         /// <param name="body"></param>
         /// <returns></returns>
         [HttpGet]
-        public IHttpActionResult GetFileList(String UserName) {
+        public IHttpActionResult GetFileList(String UserName)
+        {
             //获取数据
-            string str = "  SELECT * FROM [DB_Test].[dbo].[FileInfo] WHERE StudentID=" +
-                "(SELECT StudentID FROM [DB_Test].[dbo].[Student] WHERE StudentName='"+UserName+"')";
+            string str = "SELECT * FROM [DB_Test].[dbo].[FileInfo] WHERE StudentID=" +
+                "(SELECT StudentID FROM [DB_Test].[dbo].[Student] WHERE StudentName='" + UserName + "')";
             DataTable dt = DBHelper.GetDataTableBySql(str);
             //实例化接口返回对象
             ApiResult Result = new ApiResult()
@@ -214,6 +219,17 @@ namespace WebApi.Controllers
             string str = "SELECT * FROM DB_TEST.DBO.STUDENT";
             DataTable dt = DBHelper.GetDataTableBySql(str);
             return dt;
+        }
+
+
+        [HttpPost]
+        [HttpGet]
+        public IHttpActionResult GetListByJson(int Count)
+        {
+            //获取数据
+            string str = "SELECT TOP "+ Count + " [StudentID],[StudentName],[SEX] ,[CreateTime],[UpdateTime]FROM[DB_Tests].[dbo].[StudentS]";
+            DataTable dt = DBHelper.GetDataTableBySql(str);
+            return Json(dt);
         }
     }
 }
