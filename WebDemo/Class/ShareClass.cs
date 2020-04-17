@@ -87,7 +87,7 @@ namespace WebDemo.Class
             ApiEmailReuqest ApiParameter = new ApiEmailReuqest()
             {
                 UserEmail = "1163757514@qq.com",
-                UserEmailPassWord = "uoteepfhtjepjecd",
+                UserEmailPassWord = "mncervgdnpcsjcgg",
                 ToEmailAddress = ListTargetEmail.ToList<string>(),
                 CCEmailAddress = ListTargetEmail.ToList<string>(),
                 EmailBody = body
