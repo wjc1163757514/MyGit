@@ -211,8 +211,8 @@ namespace WebDemo.Class
 
         //上传文件功能
         public static string UploadingFile(FileRequest request) {
-            String body = JsonConvert.SerializeObject(request);
-            return ShareClass.HttpPost(AutoApiUrl+ "ApiDemo/PostFile", body);
+            //String body = JsonConvert.SerializeObject(request);
+            return ShareClass.HttpPost(AutoApiUrl+ "ApiDemo/PostFile", request);
         }
 
         //Http-Get通用，返回DataTable
