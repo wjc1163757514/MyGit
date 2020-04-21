@@ -26,7 +26,7 @@ namespace WebDemo
             string User = this.Txt_User.Text;
             string Pwd = this.Txt_Pwd.Text;
             ApiClass ApiParameter = new ApiClass() { PassWord = Pwd, UserName = User };
-            string str = ShareClass.HttpPost(ShareClass.AutoApiUrl + "UserLogin", ApiParameter);
+            string str = ShareClass.HttpPost(ShareClass.AutoApiUrl + "ApiDemo/UserLogin", ApiParameter);
             //string str = ShareClass.HttpPost(parameter);
             if (str == "true")
             {

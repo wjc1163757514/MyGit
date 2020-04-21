@@ -24,7 +24,7 @@ namespace WebDemo.API
         public  string GetString(string UserName,string PassWord)
         {
             ApiClass apiClass = new ApiClass() {UserName= UserName, PassWord= PassWord };
-            string str = "";
+            string str;
             if (UserName==""|| PassWord=="")
             {
                 str = "参数都TM搞错了";

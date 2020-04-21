@@ -28,7 +28,7 @@ namespace WebDemo
                 {
                     //拼接接口URL
 
-                    string url = ShareClass.AutoApiUrl + "GetList?Name=" + ShareClass.UserName;
+                    string url = ShareClass.AutoApiUrl + "ApiDemo/GetList?Name=" + ShareClass.UserName;
                     //绑定数据源DataTable
                     this.Repeater1.DataSource = ShareClass.GetDataTableByUrl(url);
                     this.Repeater1.DataBind();
@@ -51,7 +51,7 @@ namespace WebDemo
         protected void Btn_Load_Click(object sender, EventArgs e)
         {
             //拼接接口URL
-            string url = string.Format(ShareClass.AutoApiUrl + "GetList");
+            string url = string.Format(ShareClass.AutoApiUrl + "ApiDemo/GetAllList");
             //绑定数据源DataTable
             DataTable dt;
             if (Cache["DataTable"] == null)

@@ -45,16 +45,6 @@ namespace WebDemo
         protected void Button1_Click1(object sender, EventArgs e)
         {
             DataTable tblDatas = new DataTable("Datas");
-            DataColumn dc = null;
-            dc = tblDatas.Columns.Add("ID", Type.GetType("System.Int32"));
-            dc.AutoIncrement = true;//自动增加
-            dc.AutoIncrementSeed = 1;//起始为1
-            dc.AutoIncrementStep = 1;//步长为1
-            dc.AllowDBNull = false;//
-
-            dc = tblDatas.Columns.Add("Product", Type.GetType("System.String"));
-            dc = tblDatas.Columns.Add("Version", Type.GetType("System.String"));
-            dc = tblDatas.Columns.Add("Description", Type.GetType("System.String"));
 
             DataRow newRow;
             newRow = tblDatas.NewRow();
@@ -69,7 +59,7 @@ namespace WebDemo
             newRow["Description"] = "比大话更幼稚";
             tblDatas.Rows.Add(newRow);
 
-            Response.Write("<script>alert('" + ShareClass.dataTableToCsv(tblDatas, @"E:\Test\EccelTest.xls") + "');</script>");
+            Response.Write("<script>alert('" + ShareClass.DataTableToCsv(tblDatas, @"E:\Test\EccelTest.xls") + "');</script>");
 
         }
 
@@ -106,7 +96,7 @@ namespace WebDemo
 
         private void LoadRepeater()
         {
-            string Url = ShareClass.AutoApiUrl + "GetFileList?UserName="+ShareClass.UserName;
+            string Url = ShareClass.AutoApiUrl + "ApiDemo/GetFileList?UserName=" + ShareClass.UserName;
             this.Repeater1.DataSource = ShareClass.GetDataTableByUrl(Url);
             this.Repeater1.DataBind();
         }

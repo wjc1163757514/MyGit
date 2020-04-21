@@ -99,7 +99,7 @@ namespace WebApi.Controllers
                 return "未传参";
             }
             ApiTest test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
-            string str = "";
+            string str;
             if (test.UserName == null || test.PassWord == null)
             {
                 str = "传参格式不正确！";
@@ -130,7 +130,7 @@ namespace WebApi.Controllers
             {
                 test = JsonConvert.DeserializeObject<ApiTest>(body.ToString());
             }
-            test.PassWord = test.PassWord + Tokey;
+            test.PassWord +=Tokey;
             return Json(test);
         }
 
@@ -144,7 +144,7 @@ namespace WebApi.Controllers
         {
             FileRequest res = JsonConvert.DeserializeObject<FileRequest>(body);
             string fullpath = "";
-            string message = "";
+            string message;
             if (res.File == null)
             {
                 message = "未选择文件";

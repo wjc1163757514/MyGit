@@ -18,14 +18,13 @@ namespace WebDemo.Class
         //多个页面共享变量
         public static int Load = 0;
         public static string UserName = "";
-        public static string ApiUrl = "http://www.wangjc.top:886/api/ApiDemo/";
-        public static string ApiTestUrl = "http://localhost:50668/api/ApiDemo/";
+        public static string ApiUrl = "http://www.wangjc.top:8002/api/";
+        public static string ApiTestUrl = "http://localhost:5000/api/";
         public static string AutoApiUrl = ApiUrl;
 
         //HTTP-Get方法
         public static string HttpGet(string url)
         {
-            Encoding encoding = Encoding.UTF8;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.Accept = "text/html, application/xhtml+xml, */*";
@@ -92,7 +91,7 @@ namespace WebDemo.Class
                 CCEmailAddress = ListTargetEmail.ToList<string>(),
                 EmailBody = body
             };
-            return ShareClass.HttpContentPost("http://www.wangjc.top:886/api/Email/SendEmail", ApiParameter);
+            return ShareClass.HttpContentPost(AutoApiUrl+ "Email/SendEmail", ApiParameter);
         }
 
         //附件试一试
@@ -113,9 +112,11 @@ namespace WebDemo.Class
 
                 //创建邮件
                 MailMessage message = new MailMessage(EmailReuqest.UserEmail, EmailReuqest.ToEmailAddress[0].ToString(),
-                "邮件Demo测试，勿回，可删", EmailReuqest.EmailBody);
-                //发件人昵称
-                message.From = new MailAddress("1163757514@qq.com", "House730日运营报表专用邮箱");
+                "邮件Demo测试，勿回，可删", EmailReuqest.EmailBody)
+                {
+                    //发件人昵称
+                    From = new MailAddress("1163757514@qq.com", "House730日运营报表专用邮箱")
+                };
 
 
                 //初始化收件人和抄送人
@@ -150,7 +151,7 @@ namespace WebDemo.Class
         }
 
         //DataTable转Excel
-        public static string dataTableToCsv(DataTable table, string file)
+        public static string DataTableToCsv(DataTable table, string file)
 
         {
             try
@@ -211,7 +212,7 @@ namespace WebDemo.Class
         //上传文件功能
         public static string UploadingFile(FileRequest request) {
             String body = JsonConvert.SerializeObject(request);
-            return ShareClass.HttpPost(AutoApiUrl+ "PostFile", body);
+            return ShareClass.HttpPost(AutoApiUrl+ "ApiDemo/PostFile", body);
         }
 
         //Http-Get通用，返回DataTable
