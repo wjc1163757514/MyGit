@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace WebDemo.Class
 {
@@ -210,16 +212,21 @@ namespace WebDemo.Class
         }
 
         //上传文件功能
-        public static string UploadingFile(FileRequest request) {
-            //String body = JsonConvert.SerializeObject(request);
-            return ShareClass.HttpPost(AutoApiUrl+ "ApiDemo/PostFile", request);
+        public static FileResult UploadingFile(FileRequest request) {
+
+            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpPost(AutoApiUrl + "ApiDemo/PostFile", request));
+            FileResult fileResult = JsonConvert.DeserializeObject<FileResult> (result.Result.ToString());
+            return fileResult;
         }
 
-        //Http-Get通用，返回DataTable
-        public static DataTable GetDataTableByUrl(string url) {
+        //Http-Get通用，返回List
+        public static List<T> GetListByUrl<T>(string url) {
             //调用接口，返回值序列化为ApiResult对象
             ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpGet(url));
-            return result.Result;
+            //JArray array = (JArray)result.Result;
+            //List<T> list = (List<T>)result.Result;
+            List<T> list = result.Result==null?null:JsonConvert.DeserializeObject<List<T>>(result.Result.ToString());
+            return list;
         }
     }
 }

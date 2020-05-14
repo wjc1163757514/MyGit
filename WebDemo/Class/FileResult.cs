@@ -7,7 +7,7 @@ namespace WebDemo.Class
 {
     public class FileResult
     {
-        public string message { get; set; }
+        public string Message { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
         public int ContentLength { get; set; }

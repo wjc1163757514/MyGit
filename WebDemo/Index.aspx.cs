@@ -30,13 +30,13 @@ namespace WebDemo
 
                     string url = ShareClass.AutoApiUrl + "ApiDemo/GetList?Name=" + ShareClass.UserName;
                     //绑定数据源DataTable
-                    this.Repeater1.DataSource = ShareClass.GetDataTableByUrl(url);
+                    this.Repeater1.DataSource = ShareClass.GetListByUrl<UserResult>(url);
                     this.Repeater1.DataBind();
                 }
             }
         }
 
-        public void get() {
+        public void Get() {
 
         }
 
@@ -53,17 +53,17 @@ namespace WebDemo
             //拼接接口URL
             string url = string.Format(ShareClass.AutoApiUrl + "ApiDemo/GetAllList");
             //绑定数据源DataTable
-            DataTable dt;
+            List<UserResult> list;
             if (Cache["DataTable"] == null)
             {
-                dt = ShareClass.GetDataTableByUrl(url);
-                Cache.Insert("DataTable", dt, null, DateTime.Now.AddSeconds(60), TimeSpan.Zero);
+                list =ShareClass.GetListByUrl<UserResult>(url);
+                Cache.Insert("DataTable", list, null, DateTime.Now.AddSeconds(60), TimeSpan.Zero);
             }
             else
             {
-                dt = (DataTable)Cache["DataTable"];
+                list = (List<UserResult>)Cache["DataTable"];
             }
-            this.Repeater1.DataSource = dt;
+            this.Repeater1.DataSource = list;
             this.Repeater1.DataBind();
 
         }

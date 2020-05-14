@@ -83,9 +83,8 @@ namespace WebDemo
                     FileSize= Request.Files[0].ContentLength,
                     FileType= FileTypeList[FileTypeList.Length - 1]
                 };
-                string str = ShareClass.UploadingFile(request);
-                FileResult result = JsonConvert.DeserializeObject<FileResult>(str);
-                string message = string.Format("<script> alert('{0}');</script>", result.message);
+                FileResult result = ShareClass.UploadingFile(request);
+                string message = string.Format("<script> alert('{0}');</script>", result.Message);
                 Response.Write(message);
             }
             catch (Exception)
@@ -97,7 +96,7 @@ namespace WebDemo
         private void LoadRepeater()
         {
             string Url = ShareClass.AutoApiUrl + "ApiDemo/GetFileList?UserName=" + ShareClass.UserName;
-            this.Repeater1.DataSource = ShareClass.GetDataTableByUrl(Url);
+            this.Repeater1.DataSource = ShareClass.GetListByUrl<FileListResult>(Url);
             this.Repeater1.DataBind();
         }
 
