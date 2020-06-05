@@ -23,7 +23,7 @@ namespace WebDemo.API
         [WebMethod]
         public  string GetString(string UserName,string PassWord)
         {
-            ApiClass apiClass = new ApiClass() {UserName= UserName, PassWord= PassWord };
+            UserRequest apiClass = new UserRequest() {UserName= UserName, PassWord= PassWord };
             string str;
             if (UserName==""|| PassWord=="")
             {

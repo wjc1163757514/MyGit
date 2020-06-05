@@ -13,11 +13,11 @@ namespace WebDemo.Class
         /// <summary>
         /// 编号
         /// </summary>
-        public int StudentID { get; set; }
+        public int UserID { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
-        public string StudentName { get; set; }
+        public string UserName { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -29,6 +29,6 @@ namespace WebDemo.Class
         /// <summary>
         /// 密码
         /// </summary>
-        public string Pwd { get; set; }
+        public string PassWord { get; set; }
     }
 }

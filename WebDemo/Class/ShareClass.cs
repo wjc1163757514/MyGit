@@ -11,90 +11,15 @@ using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 
 namespace WebDemo.Class
 {
     public static class ShareClass
     {
         //多个页面共享变量
-        public static int Load = 0;
-        public static string UserName = "";
-        public static string ApiUrl = "http://www.wangjc.top:8002/api/";
-        public static string ApiTestUrl = "http://localhost:5000/api/";
-        public static string AutoApiUrl = ApiUrl;
-
-        //HTTP-Get方法
-        public static string HttpGet(string url)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.Accept = "text/html, application/xhtml+xml, */*";
-            request.ContentType = "application/json";
-            request.ContentLength = 0;
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        //HttpWebRequest方法，Body传参
-        public static string HttpPost(string url, object postData)
-        {
-
-            var data = JsonConvert.SerializeObject(postData);
-            byte[] bs = Encoding.UTF8.GetBytes(data);
-
-            HttpWebRequest result = (HttpWebRequest)WebRequest.Create(url);
-            result.ContentType = "application/json";
-            result.ContentLength = bs.Length;
-            result.Method = "POST";
-                                  
-            using (Stream reqStream = result.GetRequestStream())
-            {
-                reqStream.ReadTimeout = 10000;
-                reqStream.WriteTimeout= 10000;
-                reqStream.Write(bs, 0, bs.Length);
-            }
-            using (WebResponse wr = result.GetResponse())
-            {
-                string reader = new StreamReader(wr.GetResponseStream(),
-                    Encoding.UTF8).ReadToEnd();
-                return reader;
-            }
-        }
-        
-        //直接用HttpClientBody传json参数
-        public static string HttpContentPost(string Url, object body)
-        {
-            //body传参
-            var data = JsonConvert.SerializeObject(body);
-            HttpContent httpContent = new StringContent(data);
-            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string responseJson = httpClient.PostAsync(Url, httpContent)
-                   .Result.Content.ReadAsStringAsync().Result;
-                return responseJson;
-            }
-        }
-
-        //发送邮件功能
-        public static String SendEmail(String TargetEmail, String body)
-        {
-            //分割收件人
-            string[] ListTargetEmail = Regex.Split(TargetEmail, ",", RegexOptions.IgnoreCase);
-            ApiEmailReuqest ApiParameter = new ApiEmailReuqest()
-            {
-                UserEmail = "1163757514@qq.com",
-                UserEmailPassWord = "mncervgdnpcsjcgg",
-                ToEmailAddress = ListTargetEmail.ToList<string>(),
-                CCEmailAddress = ListTargetEmail.ToList<string>(),
-                EmailBody = body
-            };
-            return ShareClass.HttpContentPost(AutoApiUrl+ "Email/SendEmail", ApiParameter);
-        }
+        public static readonly string ApiUrl = "http://www.wangjc.top:8002/api/";
+        public static readonly string ApiTestUrl = "http://localhost:5000/api/";
+        public static readonly string AutoApiBaseUrl = ApiUrl;
 
         //附件试一试
         public static String SendEmailFile(ApiEmailReuqest EmailReuqest)
@@ -158,49 +83,49 @@ namespace WebDemo.Class
         {
             try
             {
-            string title = "";
+                string title = "";
 
-            FileStream fs = new FileStream(file, FileMode.OpenOrCreate);
+                FileStream fs = new FileStream(file, FileMode.OpenOrCreate);
 
-            //FileStream fs1 = File.Open(file, FileMode.Open, FileAccess.Read);
+                //FileStream fs1 = File.Open(file, FileMode.Open, FileAccess.Read);
 
-            StreamWriter sw = new StreamWriter(new BufferedStream(fs), System.Text.Encoding.Default);
-
-            for (int i = 0; i < table.Columns.Count; i++)
-
-            {
-
-                title += table.Columns[i].ColumnName + "\t"; //栏位：自动跳到下一单元格
-
-            }
-
-            title = title.Substring(0, title.Length - 1) + "\n";
-
-            sw.Write(title);
-
-            foreach (DataRow row in table.Rows)
-
-            {
-
-                string line = "";
+                StreamWriter sw = new StreamWriter(new BufferedStream(fs), System.Text.Encoding.Default);
 
                 for (int i = 0; i < table.Columns.Count; i++)
 
                 {
 
-                    line += row[i].ToString().Trim() + "\t"; //内容：自动跳到下一单元格
+                    title += table.Columns[i].ColumnName + "\t"; //栏位：自动跳到下一单元格
 
                 }
 
-                line = line.Substring(0, line.Length - 1) + "\n";
+                title = title.Substring(0, title.Length - 1) + "\n";
 
-                sw.Write(line);
+                sw.Write(title);
 
-            }
+                foreach (DataRow row in table.Rows)
 
-            sw.Close();
+                {
 
-            fs.Close();
+                    string line = "";
+
+                    for (int i = 0; i < table.Columns.Count; i++)
+
+                    {
+
+                        line += row[i].ToString().Trim() + "\t"; //内容：自动跳到下一单元格
+
+                    }
+
+                    line = line.Substring(0, line.Length - 1) + "\n";
+
+                    sw.Write(line);
+
+                }
+
+                sw.Close();
+
+                fs.Close();
 
             }
             catch (Exception ex)
@@ -211,22 +136,95 @@ namespace WebDemo.Class
 
         }
 
-        //上传文件功能
-        public static FileResult UploadingFile(FileRequest request) {
 
-            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpPost(AutoApiUrl + "ApiDemo/PostFile", request));
-            FileResult fileResult = JsonConvert.DeserializeObject<FileResult> (result.Result.ToString());
-            return fileResult;
-        }
+        //HTTP-Get方法
+        //public static string HttpGet(string url)
+        //{
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        //    request.Method = "GET";
+        //    request.Accept = "text/html, application/xhtml+xml, */*";
+        //    request.ContentType = "application/json";
+        //    request.ContentLength = 0;
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+        //    {
+        //        return reader.ReadToEnd();
+        //    }
+        //}
+
+        //HttpWebRequest方法，Body传参
+        //public static string HttpPost(string url, object postData)
+        //{
+
+        //    var data = JsonConvert.SerializeObject(postData);
+        //    byte[] bs = Encoding.UTF8.GetBytes(data);
+
+        //    HttpWebRequest result = (HttpWebRequest)WebRequest.Create(url);
+        //    result.ContentType = "application/json";
+        //    result.ContentLength = bs.Length;
+        //    result.Method = "POST";
+
+        //    using (Stream reqStream = result.GetRequestStream())
+        //    {
+        //        reqStream.ReadTimeout = 10000;
+        //        reqStream.WriteTimeout= 10000;
+        //        reqStream.Write(bs, 0, bs.Length);
+        //    }
+        //    using (WebResponse wr = result.GetResponse())
+        //    {
+        //        string reader = new StreamReader(wr.GetResponseStream(),
+        //            Encoding.UTF8).ReadToEnd();
+        //        return reader;
+        //    }
+        //}
+
+        //直接用HttpClientBody传json参数
+        //public static string HttpContentPost(string Url, object body)
+        //{
+        //    //body传参
+        //    var data = JsonConvert.SerializeObject(body);
+        //    HttpContent httpContent = new StringContent(data);
+        //    httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        //    using (HttpClient httpClient = new HttpClient())
+        //    {
+        //        string responseJson = httpClient.PostAsync(Url, httpContent)
+        //           .Result.Content.ReadAsStringAsync().Result;
+        //        return responseJson;
+        //    }
+        //}
+
+        //发送邮件功能
+        //public static String SendEmail(String TargetEmail, String body)
+        //{
+        //    //分割收件人
+        //    string[] ListTargetEmail = Regex.Split(TargetEmail, ",", RegexOptions.IgnoreCase);
+        //    ApiEmailReuqest ApiParameter = new ApiEmailReuqest()
+        //    {
+        //        UserEmail = "1163757514@qq.com",
+        //        UserEmailPassWord = "mncervgdnpcsjcgg",
+        //        ToEmailAddress = ListTargetEmail.ToList<string>(),
+        //        CCEmailAddress = ListTargetEmail.ToList<string>(),
+        //        EmailBody = body
+        //    };
+        //    return ShareClass.HttpContentPost(AutoApiUrl+ "Email/SendEmail", ApiParameter);
+        //}
+
+        //上传文件功能
+        //public static FileResult UploadingFile(FileRequest request) {
+
+        //    ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpPost(AutoApiUrl + "ApiDemo/PostFile", request));
+        //    FileResult fileResult = JsonConvert.DeserializeObject<FileResult> (result.Result.ToString());
+        //    return fileResult;
+        //}
 
         //Http-Get通用，返回List
-        public static List<T> GetListByUrl<T>(string url) {
-            //调用接口，返回值序列化为ApiResult对象
-            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpGet(url));
-            //JArray array = (JArray)result.Result;
-            //List<T> list = (List<T>)result.Result;
-            List<T> list = result.Result==null?null:JsonConvert.DeserializeObject<List<T>>(result.Result.ToString());
-            return list;
-        }
+        //public static List<T> GetListByUrl<T>(string url) {
+        //    //调用接口，返回值序列化为ApiResult对象
+        //    ApiResult result = JsonConvert.DeserializeObject<ApiResult>(ShareClass.HttpGet(url));
+        //    //JArray array = (JArray)result.Result;
+        //    //List<T> list = (List<T>)result.Result;
+        //    List<T> list = result.Result==null?null:JsonConvert.DeserializeObject<List<T>>(result.Result.ToString());
+        //    return list;
+        //}
     }
 }

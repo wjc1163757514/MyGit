@@ -30,7 +30,7 @@ namespace WebDemo.Class
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int StudentID { get; set; }
+        public int UserID { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

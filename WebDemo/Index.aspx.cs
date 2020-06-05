@@ -11,26 +11,25 @@ using WebDemo.Class;
 using System.IO;
 using System.Text;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace WebDemo
 {
     public partial class Index : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["Login"]==null || Session["Login"].ToString() != "True")
+                if (Session["UserSession"] ==null)
                 {
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Login.aspx",false);
                 }
                 else
                 {
-                    //拼接接口URL
-
-                    string url = ShareClass.AutoApiUrl + "ApiDemo/GetList?Name=" + ShareClass.UserName;
                     //绑定数据源DataTable
-                    this.Repeater1.DataSource = ShareClass.GetListByUrl<UserResult>(url);
+                    UserSession userSession = (UserSession)Session["UserSession"];
+                    this.Repeater1.DataSource = new List<UserResult>() { await UserServer.UserGetUserMsg(userSession.UserName, userSession.Token) };
                     this.Repeater1.DataBind();
                 }
             }
@@ -43,41 +42,52 @@ namespace WebDemo
         //退出登录
         protected void Btn_Close_Click(object sender, EventArgs e)
         {
-            Session.Remove("Login");
-            Response.Redirect("Login.aspx");
+            Session.Remove("UserSession");
+            Response.Redirect("Login.aspx",false);
         }
 
         //加载所有数据
-        protected void Btn_Load_Click(object sender, EventArgs e)
+        protected async void Btn_Load_Click(object sender, EventArgs e)
         {
-            //拼接接口URL
-            string url = string.Format(ShareClass.AutoApiUrl + "ApiDemo/GetAllList");
             //绑定数据源DataTable
             List<UserResult> list;
-            if (Cache["DataTable"] == null)
+            UserSession userSession = (UserSession)Session["UserSession"];
+            if (Cache["UserList"] == null)
             {
-                list =ShareClass.GetListByUrl<UserResult>(url);
-                Cache.Insert("DataTable", list, null, DateTime.Now.AddSeconds(60), TimeSpan.Zero);
+                list =await UserServer.UserGetUserList(userSession.Token);
+                Cache.Insert("UserList", list, null, DateTime.Now.AddSeconds(60), TimeSpan.Zero);
             }
             else
             {
-                list = (List<UserResult>)Cache["DataTable"];
+                list = (List<UserResult>)Cache["UserList"];
             }
             this.Repeater1.DataSource = list;
             this.Repeater1.DataBind();
 
         }
 
+        //清除Cache缓存
         protected void Btn_ClearCache_Click(object sender, EventArgs e)
         {
-            //清除Cache缓存
-            Cache.Remove("DataTable");
+            Cache.Remove("UserList");
         }
 
         //发送邮件按钮
-        protected void Btn_SendEmail_Click(object sender, EventArgs e)
+        protected async void Btn_SendEmail_Click(object sender, EventArgs e)
         {
-           Response.Write("<script>alert('"+ ShareClass.SendEmail(Txt_TargetEmail.Text, Txt_EmailBody.Text) + "');</script>");
+            //分割收件人
+            string[] listTargetEmail = Regex.Split(Txt_TargetEmail.Text, ",", RegexOptions.IgnoreCase);
+            ApiEmailReuqest apiEmailReuqest = new ApiEmailReuqest()
+            {
+                UserEmail = "1163757514@qq.com",
+                UserEmailPassWord = "mncervgdnpcsjcgg",
+                ToEmailAddress = listTargetEmail.ToList<string>(),
+                CCEmailAddress = listTargetEmail.ToList<string>(),
+                EmailBody = Txt_EmailBody.Text
+            };
+
+            string sendEmailMsg =await UserServer.UserSendEmail(apiEmailReuqest);
+            Response.Write("<script>alert('"+ sendEmailMsg + "');</script>");
         }
 
         protected void Repeater1_ItemCreated(object sender, RepeaterItemEventArgs e)
@@ -90,9 +100,10 @@ namespace WebDemo
 
         }
 
+        //进入操作页面
         protected void Btn_File_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Test.aspx");
+            Response.Redirect("Test.aspx",false);
         }
     }
 }

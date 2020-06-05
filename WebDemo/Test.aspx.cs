@@ -17,28 +17,26 @@ namespace WebDemo
         {
             if (!IsPostBack)
             {
-                if (Session["Login"] == null || Session["Login"].ToString() != "True")
-                {
-                    Response.Redirect("Login.aspx");
-                }
                 LoadRepeater();
             }
         }
 
         //发送邮件
-        protected void Button1_Click(object sender, EventArgs e)
+        protected async void Button1_Click(object sender, EventArgs e)
         {
             string TargetEmail = "wbwangjc@centaline.com.cn,wbwangjc@centaline.com.cn";
             string[] ListTargetEmail = Regex.Split(TargetEmail, ",", RegexOptions.IgnoreCase);
             ApiEmailReuqest ApiParameter = new ApiEmailReuqest()
             {
                 UserEmail = "1163757514@qq.com",   //1163757514@qq.com
-                UserEmailPassWord = "uoteepfhtjepjecd",   //uoteepfhtjepjecd
+                UserEmailPassWord = "mncervgdnpcsjcgg",   //uoteepfhtjepjecd
                 ToEmailAddress = ListTargetEmail.ToList<string>(),
                 CCEmailAddress = ListTargetEmail.ToList<string>(),
                 EmailBody = "早上好哟~~~"
             };
-            Response.Write("<script>alert('" + ShareClass.SendEmailFile(ApiParameter) + "');</script>");
+
+            string EmailResultMsg = await UserServer.UserSendEmail(ApiParameter);
+            Response.Write("<script>alert('" + EmailResultMsg + "');</script>");
         }
 
         //生成excel
@@ -64,40 +62,72 @@ namespace WebDemo
         }
 
         //上传文件
-        protected void Btn_UploadingFile_Click(object sender, EventArgs e)
+        protected async void Btn_UploadingFile_Click(object sender, EventArgs e)
         {
-            try
+
+            if (Session["UserSession"] == null)
             {
-                byte[] buffer = null;
-                string[] FileTypeList = Request.Files[0].FileName.Split('.');
-                if (Request.Files[0].FileName != "")
+                Response.Redirect("Login.aspx", false);
+            }
+            else
+            {
+                try
                 {
-                    buffer = new byte[Request.Files[0].InputStream.Length];
-                    Request.Files[0].InputStream.Read(buffer, 0, buffer.Length);
+                    byte[] buffer = null;
+
+                    string[] FileTypeList = Request.Files[0].FileName.Split('.');
+
+                    string resultMessage = "";
+
+                    UserSession userSession = (UserSession)Session["UserSession"];
+
+                    if (Request.Files[0].FileName != "")
+                    {
+                        buffer = new byte[Request.Files[0].InputStream.Length];
+                        Request.Files[0].InputStream.Read(buffer, 0, buffer.Length);
+                        FileRequest request = new FileRequest()
+                        {
+                            File = buffer,
+                            FileName = Request.Files[0].FileName,
+                            UserName = userSession.UserName,
+                            FileSize = Request.Files[0].ContentLength,
+                            FileType = FileTypeList[FileTypeList.Length - 1]
+                        };
+
+                        FileResult result = await UserServer.UserPostFile(request, userSession.Token);
+                        resultMessage = result.Message;
+                    }
+                    else
+                    {
+                        resultMessage = "未选择文件!";
+                    }
+
+                    Response.Write(string.Format("<script> alert('{0}');</script>",resultMessage).ToString());
                 }
-                FileRequest request = new FileRequest()
+                catch (Exception)
                 {
-                    File = buffer,
-                    FileName =Request.Files[0].FileName,
-                    StudentName = ShareClass.UserName,
-                    FileSize= Request.Files[0].ContentLength,
-                    FileType= FileTypeList[FileTypeList.Length - 1]
-                };
-                FileResult result = ShareClass.UploadingFile(request);
-                string message = string.Format("<script> alert('{0}');</script>", result.Message);
-                Response.Write(message);
+                    throw;
+                }
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
         }
 
-        private void LoadRepeater()
+        /// <summary>
+        /// 加载文件列表
+        /// </summary>
+        private async void LoadRepeater()
         {
-            string Url = ShareClass.AutoApiUrl + "ApiDemo/GetFileList?UserName=" + ShareClass.UserName;
-            this.Repeater1.DataSource = ShareClass.GetListByUrl<FileListResult>(Url);
-            this.Repeater1.DataBind();
+            if (Session["UserSession"] == null)
+            {
+                Response.Redirect("Login.aspx", false);
+            }
+            else
+            {
+                UserSession userSession = (UserSession)Session["UserSession"];
+                this.Repeater1.DataSource = await UserServer.UserGetFileList(userSession.UserName, userSession.Token);
+                this.Repeater1.DataBind();
+            }
+
         }
 
         protected void Btn_LoadRepeater_Click(object sender, EventArgs e)
@@ -107,7 +137,7 @@ namespace WebDemo
 
         protected void Btn_BackHomePage_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Index.aspx");
+            Response.Redirect("Index.aspx", false);
         }
     }
 }

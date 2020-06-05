@@ -17,26 +17,29 @@ namespace WebDemo
         {
             if (!IsPostBack)
             {
-               // ShareClass.Load = 0;
             }
         }
 
-        protected void Btn_Click(object sender, EventArgs e)
+        protected async void Btn_Click(object sender, EventArgs e)
         {
-            string User = this.Txt_User.Text;
-            string Pwd = this.Txt_Pwd.Text;
-            ApiClass ApiParameter = new ApiClass() { PassWord = Pwd, UserName = User };
-            string str = ShareClass.HttpPost(ShareClass.AutoApiUrl + "ApiDemo/UserLogin", ApiParameter);
-            //string str = ShareClass.HttpPost(parameter);
-            if (str == "true")
+            string userName = this.Txt_User.Text;
+            string passWord = this.Txt_Pwd.Text;
+            UserRequest userRequest = new UserRequest() { PassWord = passWord, UserName = userName };
+            TokenResult tokenResult=await UserServer.UserLoginToken(userRequest);
+            //判断是否登录请求Token成功
+            if (tokenResult.Status == 200)
             {
-                Session["Login"] = "True";
-                ShareClass.UserName = User;
-                Response.Redirect("Index.aspx");
+                Session["UserSession"] =new UserSession() 
+                {
+                    IsLogin=true,
+                    UserName=userName,
+                    Token=tokenResult.Token
+                };
+                Session.Timeout = 60;
+                Response.Redirect("Index.aspx",false);
             }
             else
             {
-                ShareClass.Load = 0;
                 Response.Write("<script>alert('登录失败');</script>");
             }
         }

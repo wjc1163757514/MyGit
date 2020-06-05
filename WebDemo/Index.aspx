@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="WebDemo.Index" Debug="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="WebDemo.Index" Debug="true" Async="true"%>
 
 <!DOCTYPE html>
 
@@ -21,18 +21,18 @@
             </div>
             <table>
                 <tr>
-                    <th>编号</th>
-                    <th>姓名</th>
-                    <th>时间</th>
+                    <th>用户ID</th>
+                    <th>用户名</th>
+                    <th>注册</th>
                     <th>性别</th>
                 </tr>
                 <asp:Repeater ID="Repeater1" runat="server" OnItemCreated="Repeater1_ItemCreated">
                     <ItemTemplate>
                         <tr>
-                            <td><%#Eval("STUDENTID") %></td>
-                            <td><%#Eval("STUDENTNAME") %></td>
-                            <td><%#Eval("CREATETIME") %></td>
-                            <td><%#Eval("SEX") %></td>
+                            <td><%#Eval("UserID") %></td>
+                            <td><%#Eval("UserName") %></td>
+                            <td><%#Eval("CreateTime") %></td>
+                            <td><%#Eval("Sex") %></td>
                         </tr>
                     </ItemTemplate>
                 </asp:Repeater>

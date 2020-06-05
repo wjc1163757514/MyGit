@@ -91,7 +91,10 @@
       <DependentUpon>ApiTest.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Class\ApiClass.cs" />
+    <Compile Include="Class\HttpContext.cs" />
+    <Compile Include="Class\TokenResult.cs" />
+    <Compile Include="Class\UserServer.cs" />
+    <Compile Include="Class\UserRequest.cs" />
     <Compile Include="Class\ApiEmailReuqest.cs" />
     <Compile Include="Class\ApiResult.cs" />
     <Compile Include="Class\FileListResult.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Class\FileResult.cs" />
     <Compile Include="Class\ShareClass.cs" />
     <Compile Include="Class\UserResult.cs" />
+    <Compile Include="Class\UserSession.cs" />
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
